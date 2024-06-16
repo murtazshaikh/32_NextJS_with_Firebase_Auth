@@ -1,77 +1,7 @@
-"use client";
-import { useState } from "react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
-import { useRouter } from "next/navigation";
-import Button from "@/public/components/Button";
+import SignUpComp from "@/public/components/SignUpComp";
 
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [createUserWithEmailAndPassword] =
-    useCreateUserWithEmailAndPassword(auth);
-  const router = useRouter();
-
-  const handleSignUp = async () => {
-    try {
-      const res = await createUserWithEmailAndPassword(email, password);
-      if (res) {
-        sessionStorage.setItem("user", true);
-        setEmail("");
-        setPassword("");
-        router.push("/");
-      } else {
-        setError("Please enter valid email and password!");
-      }
-
-      console.log(res, "res");
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 p-5">
-      <div className="bg-gray-800 p-6 md:p-10 rounded-lg shadow-xl w-96">
-        <h1 className="text-white text-2xl mb-5">Sign Up</h1>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            setError("");
-          }}
-          className="w-full p-3 mb-4 bg-gray-700 rounded outline-none text-white placeholder-gray-500"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setError("");
-          }}
-          className="w-full p-3 mb-4 bg-gray-700 rounded outline-none text-white placeholder-gray-500"
-        />
-        {error && <p className="text-red-400 mb-4 text-xs">{error}</p>}
-        <Button onClick={handleSignUp} className="w-full mb-5 bg-indigo-600">
-          Sign Up
-        </Button>
-
-        <p className="text-white flex items-center justify-center text-sm">
-          Already have an account?&nbsp;{" "}
-          <button
-            onClick={() => router.push("/sign-in")}
-            className="text-indigo-600"
-          >
-            Sign in
-          </button>
-        </p>
-      </div>
-    </div>
-  );
+  return <SignUpComp />;
 };
 
 export default SignUp;
